@@ -1,3 +1,4 @@
+import e from "express";
 import xmlModel from "../models/xml.model.js";
 import xml2js from "xml2js";
 
@@ -26,6 +27,32 @@ const xmlController = {
         res.status(400).json({
           message: "Ocorreu um erro ao inserir o registro",
         });
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: "Ocorreu um erro no serviodor",
+        errorMessage: error.message,
+      });
+    }
+  },
+
+  //Listar Produtos
+
+  listarProdutos: async (req, res) => {
+    try {
+      const xml = req.body;
+      const result = await xmlModel.selectAll();
+
+      console.log(result);
+      if (result.length === 0) {
+        return res.status(200).json({
+          message: "Não há registros",
+        });
+      }
+      res.status(201).json({
+        message: "Registro inserido com sucesso",
+        values: result,
       });
     } catch (error) {
       console.error(error);
