@@ -5,15 +5,12 @@ const produtoController = {
     try {
       const { nome, preco } = req.body; //Implementar validações dos valores (campos) recebidos
       const result = await prisma.produtos.create({
-        data: { nome, preco },
-      });
-      
-      // Create é como um insert sem precisar escrever todo o bloco
+        data: { nomeProduto: nome, precoProduto: preco },
+      }); // Create é como um insert sem precisar escrever todo o bloco
 
       res.status(201).json({
-        message: " Registro Incluido com sucesso",
+        message: "Registro Incluido com sucesso",
       });
-
     } catch (error) {
       console.error(error);
       res.status(500).json({
