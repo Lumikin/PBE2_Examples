@@ -5,11 +5,17 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   // output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Produtos {
+  idProduto    Int     @id @default(autoincrement())
+  nomeProduto  String  @db.VarChar(50)
+  precoProduto Decimal @db.Decimal(10, 2)
 }
