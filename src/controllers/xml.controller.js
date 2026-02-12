@@ -39,21 +39,20 @@ const xmlController = {
 
   //Listar Produtos
 
-  listarProdutos: async (req, res) => {
+  listarTodos: async (req, res) => {
     try {
-      const xml = req.body;
       const result = await xmlModel.selectAll();
-
       console.log(result);
-      if (result.length === 0) {
-        return res.status(200).json({
-          message: "Não há registros",
+
+      if (result.length > 0) {
+        const estruturaXML = new xml2js.Builder({
+          rootName: "produtos",
+          xmldec: { version: "1.0", encoding: "utf-8" },
         });
+        const xml = estruturaXML.buildObject({ produto: result });
+        res.set("Content-Type", "application/xml");
+        return res.status(200).send(xml);
       }
-      res.status(201).json({
-        message: "Registro inserido com sucesso",
-        values: result,
-      });
     } catch (error) {
       console.error(error);
       res.status(500).json({
