@@ -19,10 +19,10 @@ const produtoModel = {
     const [rows] = await pool.execute(sql, values);
     return rows;
   },
-  update: async (idCategoria, nomeProduto, valor, vinculoImagem, id) => {
+  update: async (idCategoria, nomeProduto, valor, id) => {
     const sql =
-      "UPDATE produtos SET idCategoria =? nomeProduto = ? valor = ? vinculoImagem = ? WHERE idCategoria = ?";
-    const values = [idCategoria, nomeProduto, valor, vinculoImagem, id];
+      "UPDATE produtos SET idCategoria = ?, nomeProduto = ?, valor = ? WHERE idProduto = ?;";
+    const values = [idCategoria, nomeProduto, valor, id];
     const [rows] = await pool.execute(sql, values);
     return rows;
   },

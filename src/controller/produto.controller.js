@@ -4,6 +4,11 @@ const produtoController = {
   select: async (req, res) => {
     try {
       const result = await produtoModel.selectAll();
+      if (result.length === 0) {
+        return res.status(200).json({
+          message: "Não há registros na tabela",
+        });
+      }
       res.status(201).json({ result });
     } catch (error) {
       console.error(error);
@@ -15,7 +20,6 @@ const produtoController = {
   },
   inserir: async (req, res) => {
     try {
-
       //   ---- verificação de imagem ---- //
 
       if (!req.file) {
@@ -24,14 +28,28 @@ const produtoController = {
         });
       }
 
-      const {idCategoria, nomeProduto, valor} = req.body
-      if (!idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
+      const { idCategoria, nomeProduto, valor } = req.body;
+      if (
+        !idCategoria ||
+        idCategoria <= 0 ||
+        !nomeProduto ||
+        nomeProduto.length < 3 ||
+        !valor ||
+        valor <= 0
+      ) {
         return res.status(400).json({
-            message:'Virifique os dados e tente novamente'
-        })
+          message: "Virifique os dados e tente novamente",
+        });
       }
-      const vinculoImagem = `/uploads/images/${req.file.filename}` //Caminho relativo
-      const result = await produtoModel.insert(idCategoria, nomeProduto, valor, vinculoImagem)
+
+      const vinculoImagem = `/uploads/images/${req.file.filename}`; //Caminho relativo
+
+      const result = await produtoModel.insert(
+        idCategoria,
+        nomeProduto,
+        valor,
+        vinculoImagem,
+      );
       res.status(200).json({ result });
     } catch (error) {
       console.error(error);
@@ -61,14 +79,21 @@ const produtoController = {
   },
   alterar: async (req, res) => {
     try {
-      const {idCategoria, nomeProduto, valor} = req.body
-      if (!idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
+      const { idCategoria, nomeProduto, valor } = req.body;
+      const id = req.query
+      if ( !idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
         return res.status(400).json({
-            message:'Virifique os dados e tente novamente'
-        })
+          message: "Verifique os dados e tente novamente",
+        });
       }
 
-      const result = await produtoModel.update(idCategoria, nomeProduto, valor, id);
+      const result = await produtoModel.update(
+        idCategoria,
+        nomeProduto,
+        valor,
+        id,
+      );
+      console.log(result)
       if (result.length === 0) {
         return res.status(200).json({
           message: "Não tem registros na tabela",
