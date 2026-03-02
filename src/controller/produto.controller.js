@@ -1,9 +1,9 @@
-import categoriaModel from "../models/categoria.model.js";
+import produtoModel from "../models/produto.model.js";
 
-const categoriaController = {
+const produtoController = {
   select: async (req, res) => {
     try {
-      const result = await categoriaModel.selectAll();
+      const result = await produtoModel.selectAll();
       res.status(201).json({ result });
     } catch (error) {
       console.error(error);
@@ -13,11 +13,38 @@ const categoriaController = {
       });
     }
   },
+  inserir: async (req, res) => {
+    try {
 
+      //   ---- verificação de imagem ---- //
+
+      if (!req.file) {
+        return res.status(400).json({
+          message: "Arquivo não enviado",
+        });
+      }
+
+      const {idCategoria, nomeProduto, valor} = req.body
+      if (!idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
+        return res.status(400).json({
+            message:'Virifique os dados e tente novamente'
+        })
+      }
+      const vinculoImagem = `/uploads/images/${req.file.filename}` //Caminho relativo
+      const result = await produtoModel.insert(idCategoria, nomeProduto, valor, vinculoImagem)
+      res.status(200).json({ result });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: "Erro no Servidor",
+        errorMessage: error.message,
+      });
+    }
+  },
   selectId: async (req, res) => {
     try {
       const id = req.params.id;
-      const result = await categoriaModel.select(id);
+      const result = await produtoModel.select(id);
       if (result.length === 0) {
         return res.status(200).json({
           message: "Não há registro com esse ID",
@@ -32,30 +59,16 @@ const categoriaController = {
       });
     }
   },
-  inserir: async (req, res) => {
-    try {
-      const { descricao } = req.body;
-      const result = await categoriaModel.insert(descricao);
-      res.status(201).json({ result });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        Message: "Ocorreu um erro no servidor",
-        errorMessage: error.message,
-      });
-    }
-  },
   alterar: async (req, res) => {
     try {
-      const { descricao } = req.body;
-      const id = Number(req.query.id);
-      if (!id || id <= 0 || !descricao || descricao.lenth === 0) {
+      const {idCategoria, nomeProduto, valor} = req.body
+      if (!idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
         return res.status(400).json({
-          message: "Verifique os dados e tente novamente",
-        });
+            message:'Virifique os dados e tente novamente'
+        })
       }
 
-      const result = await categoriaModel.update(descricao, id);
+      const result = await produtoModel.update(idCategoria, nomeProduto, valor, id);
       if (result.length === 0) {
         return res.status(200).json({
           message: "Não tem registros na tabela",
@@ -81,11 +94,11 @@ const categoriaController = {
           message: "Verifique o ID fornecido e tente novamente",
         });
       }
-      const result = await categoriaModel.delete(id);
-      if(result.affectedRows === 0){
+      const result = await produtoModel.delete(id);
+      if (result.affectedRows === 0) {
         return res.status(400).json({
-          message: 'Erro ao remover ID'
-        })
+          message: "Erro ao remover ID",
+        });
       }
       console.log(result);
       res.status(201).json({ result });
@@ -99,4 +112,4 @@ const categoriaController = {
   },
 };
 
-export default categoriaController;
+export default produtoController;

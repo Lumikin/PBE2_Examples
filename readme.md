@@ -1,3 +1,3 @@
 ## Node
 ### Dependencias
-    express dotenv multer
+    express dotenv multer mysql2 

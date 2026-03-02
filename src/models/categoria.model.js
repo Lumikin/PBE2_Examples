@@ -1,4 +1,4 @@
-import pool from "../config/db";
+import pool from "../config/db.js";
 
 const categoriaModel = {
   selectAll: async () => {
@@ -13,14 +13,14 @@ const categoriaModel = {
     return rows;
   },
   insert: async (descricao) => {
-    const sql = "INSERT INTO categoria (descricaoCategoria) VALUES (?)";
+    const sql = "INSERT INTO categorias (descricao) VALUES (?)";
     const values = [descricao];
     const [rows] = await pool.execute(sql, values);
     return rows;
   },
   update: async (descricao, id) => {
     const sql =
-      "UPDATE categoria SET descricaoCategoria = ? WHERE idCategoria = ?";
+      "UPDATE categorias SET descricao = ? WHERE idCategoria = ?";
     const values = [descricao, id];
     const [rows] = await pool.execute(sql, values);
     return rows;
