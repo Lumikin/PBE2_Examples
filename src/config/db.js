@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import { configDotenv } from "dotenv";
+//  ----- Databse Poll -----
 
 const poll = mysql.createPool({
   host: process.env.DB_HOST,
@@ -10,3 +11,5 @@ const poll = mysql.createPool({
   connectionLimit: 50,
   queueLimit: 0,
 });
+
+export default poll;
