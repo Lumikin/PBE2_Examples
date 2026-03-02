@@ -80,20 +80,15 @@ const produtoController = {
   alterar: async (req, res) => {
     try {
       const { idCategoria, nomeProduto, valor } = req.body;
-      const id = req.query
+      const id = req.query.id
       if ( !idCategoria || idCategoria <= 0 || !nomeProduto || nomeProduto.length < 3 || !valor || valor <= 0) {
         return res.status(400).json({
           message: "Verifique os dados e tente novamente",
         });
       }
-
-      const result = await produtoModel.update(
-        idCategoria,
-        nomeProduto,
-        valor,
-        id,
-      );
-      console.log(result)
+      console.log(idCategoria, nomeProduto, valor)
+      const result = await produtoModel.update(idCategoria,nomeProduto,valor,id,);
+      
       if (result.length === 0) {
         return res.status(200).json({
           message: "Não tem registros na tabela",
