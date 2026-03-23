@@ -32,7 +32,10 @@ class Carro {
 const carro1 = new Carro("Chevrolet", "Cruze", 2025, "Cinza");
 const carro2 = new Carro("Volkswagen", "UP", 2022, "Branco");
 
-carro1.valor = 120000.0;
+carro1.valor = 120000.00;
+carro2.valor = 50000.00;
+console.log(carro1.valor)
+console.log(carro2.valor)
 
-console.log(carro1.mostrarInfo());
-console.log(carro2.mostrarInfo());
+// console.log(carro1.mostrarInfo());
+// console.log(carro2.mostrarInfo());
