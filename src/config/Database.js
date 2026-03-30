@@ -6,7 +6,7 @@ class Databse {
   static #instance = null;
   #pool = null;
 
-  #create() {
+  #createPool() {
     this.#pool = mysql.createPool({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -21,7 +21,7 @@ class Databse {
   static getInstance() {
     if (!Databse.#instance) {
       Databse.#instance = new Databse();
-      Databse.#instance.#create();
+      Databse.#instance.#createPool();
     }
     return Databse.#instance;
   }
@@ -31,4 +31,4 @@ class Databse {
   }
 }
 
-export const db = Databse.getInstance().getPool();
+export const connection = Databse.getInstance().getPool();
