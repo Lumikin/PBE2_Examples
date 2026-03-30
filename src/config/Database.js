@@ -21,7 +21,7 @@ class Databse {
   static getInstance() {
     if (!Databse.#instance) {
       Databse.#instance = new Databse();
-      Databse.#instance.createPool();
+      Databse.#instance.#create();
     }
     return Databse.#instance;
   }
@@ -31,4 +31,4 @@ class Databse {
   }
 }
 
-export const connection = Databse.getInstance().getPool();
+export const db = Databse.getInstance().getPool();
