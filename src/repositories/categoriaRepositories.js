@@ -4,15 +4,15 @@ const categoriaRepository = {
   criar: async (categoria) => {
     const sql = "INSERT INTO categorias (Nome, Descricao) VALUES (?,?);";
     const values = [categoria.nome, categoria.descricao];
-    const [row] = await connection.execute(sql, values);
-    return row;
+    const [rows] = await connection.execute(sql, values);
+    return rows;
   },
 
   editar: async (categoria) => {
     const sql = "UPDATE categorias SET Nome=?, Descricao=? WHERE id=?;";
     const values = [categoria.nome, categoria.descricao, categoria.id];
-    const [row] = await connection.execute(sql, values);
-    return row;
+    const [rows] = await connection.execute(sql, values);
+    return rows;
   },
 
   selecionar: async () => {

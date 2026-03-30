@@ -10,19 +10,30 @@ export class Categoria {
     this.#id = pId;
   }
 
+  get nome() {
+    return this.#nome;
+  }
+
   set nome(value) {
     this.#validarNome(value);
     this.#nome = value;
+  }
+
+  get descricao() {
+    return this.#descricao;
   }
 
   set descricao(value) {
     this.#validarDescricao(value);
     this.#descricao = value;
   }
+  get id() {
+    return this.#id;
+  }
 
   set id(value) {
     this.#validarId(value);
-    this.id = value;
+    this.#id = value;
   }
 
   #validarNome(value) {

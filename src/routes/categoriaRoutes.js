@@ -6,6 +6,6 @@ const categoriaRoutes = Router();
 categoriaRoutes.get("/", categoriaController.selecionar);
 categoriaRoutes.post("/", categoriaController.criar);
 categoriaRoutes.put("/", categoriaController.atualizar);
-categoriaRoutes.delete("/", categoriaController.deletar);
+categoriaRoutes.delete("/:id", categoriaController.deletar);
 
 export default categoriaRoutes;

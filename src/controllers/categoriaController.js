@@ -28,10 +28,10 @@ const categoriaController = {
   atualizar: async (req, res) => {
     try {
       const id = Number(req.query.id);
-      const { nome, descricao } = req.body;
-      const categoria = Categoria.criar({ nome, descricao, id });
-      const result = await categoriaRepository.editar(categoria);
-      res.status(200).json({ result });
+    const { nome, descricao } = req.body;
+    const categoria = Categoria.editar({ nome, descricao}, id); 
+    const result = await categoriaRepository.editar(categoria);
+    res.status(200).json({ result });
     } catch (error) {
       console.log(error);
       res.status(500).json({
@@ -41,9 +41,8 @@ const categoriaController = {
   },
   deletar: async (req, res) => {
     try {
-      const id = Number(req.params);
-      const categoria = Categoria.criar({ id });
-      const result = await categoriaRepository.deletar(categoria);
+      const id = Number(req.params.id);
+      const result = await categoriaRepository.deletar(id);
       res.status(200).json({ result });
     } catch (error) {
       console.log(error);
